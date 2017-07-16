@@ -6,7 +6,7 @@
 /*   By: kmodipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 14:30:30 by kmodipa           #+#    #+#             */
-/*   Updated: 2017/07/16 16:18:21 by kmodipa          ###   ########.fr       */
+/*   Updated: 2017/07/16 16:59:42 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		*ft_range(int start, int end)
 	int		index;
 
 	index = 0;
-	//array = (int *)malloc(sizeof(array) * (end - start));
 	if (start <= end)
 	{
 		array = (int *)malloc(sizeof(array) * (end - start));
@@ -58,11 +57,23 @@ int		main(int c, char **v)
 		array = ft_range(atoi(v[1]), atoi(v[2]));
 		start = atoi(v[1]);
 		end = atoi(v[2]);
-		while (start <= end)
+		if (start <= end)
 		{
-			printf("%i\n", array[chars]);
-			chars++;
-			start++;
+			while (start <= end)
+			{
+				printf("%i\n", array[chars]);
+				chars++;
+				start++;
+			}
+		}
+		else
+		{
+			while (start >= end)
+			{
+				printf("%i\n", array[chars]);
+				chars++;
+				start--;
+			}
 		}
 	}
 	return (0);
