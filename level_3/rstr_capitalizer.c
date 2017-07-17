@@ -6,7 +6,7 @@
 /*   By: kmodipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 17:23:12 by kmodipa           #+#    #+#             */
-/*   Updated: 2017/07/16 18:49:52 by kmodipa          ###   ########.fr       */
+/*   Updated: 2017/07/17 17:18:01 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,83 @@ int		iscapital(int c)
 	return (0);
 }
 
+int		isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
 void	capitalizer(char *str)
 {
-	int index;
-	int len;
+	int		index;
 
 	index = 0;
-	len = ft_strlen(str) - 1;
 	while (str[index] != '\0')
 	{
-		if (str[len] == 32 || str[len] == 9)
-			ft_putchar(str[len]);
-		else if ((str[len - 1] == 32 && str[len] != 32) ||
-				(str[len - 1] == 9 && str[len] != 9))
+		if (isalpha(str[index]) == 1)
 		{
-			ft_putchar(str[len] - 33);
+			if (str[index] == 32 || str[index] == 9)
+			{
+				ft_putchar(str[index]);
+			}
+			else if ((str[index - 1] == 32 && str[index] != 32) ||
+					(str[index - 1] == 9 && str[index] != 9))
+			{
+				if (str[index + 1] == 32 || str[index + 1] == 9)
+				{
+					if (iscapital(str[index]) == 1)
+						ft_putchar(str[index]);
+					else
+						ft_putchar(str[index] - 32);
+				}
+				else if (index + 1== ft_strlen(str))
+				{
+					if (iscapital(str[index]) == 1)
+						ft_putchar(str[index]);
+					else
+						ft_putchar(str[index] - 32);
+				}
+				else if (iscapital(str[index]) == 1)
+					ft_putchar(str[index] + 32);
+				else
+					ft_putchar(str[index]);
+			}
+			else if ((str[index + 1] == 32 && str[index] != 32) ||
+					(str[index + 1] == 9 && str[index] != 9))
+			{
+				if (iscapital(str[index]) == 1)
+					ft_putchar(str[index]);
+				else
+					ft_putchar(str[index] - 32);
+			}
+			else if (iscapital(str[index]) == 1)
+			{
+				if (index + 1 == ft_strlen(str))
+				{
+					ft_putchar(str[index]);
+				}
+				else
+					ft_putchar(str[index] + 32);
+			}
+			else
+			{
+				if (index == 0)
+					ft_putchar(str[index] - 32);
+				else if (index + 1 == ft_strlen(str))
+				{
+					if (iscapital(str[index]) == 1)
+						ft_putchar(str[index]);
+					else
+						ft_putchar(str[index] - 32);
+				}
+				else
+					ft_putchar(str[index]);
+			}
 		}
 		else
-			ft_putchar(str[len]);
+			ft_putchar(str[index]);
 		index++;
-		len--;
 	}
 	ft_putchar('\n');
 }
