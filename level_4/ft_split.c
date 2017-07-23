@@ -6,7 +6,7 @@
 /*   By: kmodipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 08:29:01 by kmodipa           #+#    #+#             */
-/*   Updated: 2017/07/22 17:53:30 by kmodipa          ###   ########.fr       */
+/*   Updated: 2017/07/23 14:13:31 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,32 @@ int		ft_strlen(char *str)
 	return (len);
 }
 
-char 	*ft_strsub(char *str, int start, int end)
+char	*ft_strsub(char *s, int start, int len)
 {
-	int		index;
-	char	*sub;
+	char	*new_str;
+	int	index;
 
 	index = 0;
-	if (!str)
-		return (NULL);
-	sub = (char *)malloc(sizeof(char *) * ft_strlen(str));
-	while ((str[index] != '\0') && (start <= end))
+	if (s)
 	{
-		sub[index] = str[start];
-		start++;
-		index++;
+		new_str = (char *)malloc(sizeof(char *) * (len + 1));
+		if (new_str)
+		{
+			if (start < ft_strlen(s) && len <= ft_strlen(s))
+			{
+				while (index < len)
+				{
+					new_str[index] = s[start + index];
+					index++;
+				}
+				new_str[index] = '\0';
+				return (new_str);
+			}
+		}
 	}
-	return (sub);
+	return (NULL);
 }
+
 
 void	ft_putstr(char *str)
 {
@@ -83,7 +92,7 @@ char	**ft_split(char *str)
 
 	index = 0;
 	array_index = 0;
-	if (!str || !(array = (char **)malloc(sizeof(char *) * word_count(str))))
+	if (!str || !(array = (char **)malloc(sizeof(char *) * word_count(str) + 1)))
 		return (NULL);
 	while (str[index] == 32 || str[index] == 9)
 		index++;
@@ -102,8 +111,8 @@ char	**ft_split(char *str)
 			}
 		}
 		index++;
-		array[array_index] = 0;
 	}
+	array[array_index] = 0;
 	return (array);
 }
 
@@ -124,6 +133,7 @@ int		main(int c, char **v)
 		while (array[param] != 0)
 		{
 			ft_putstr(array[param]);
+			ft_putstr("\n");
 			param++;
 		}
 	}
