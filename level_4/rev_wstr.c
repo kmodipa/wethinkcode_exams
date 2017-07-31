@@ -6,7 +6,7 @@
 /*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 09:24:i52 by exam              #+#    #+#             */
-/*   Updated: 2017/07/26 12:22:11 by exam             ###   ########.fr       */
+/*   Updated: 2017/07/31 10:16:11 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_strsub(char *str, int start, int end)
 		start++;
 		index++;
 	}
+	new[index] = '\0';
 	return (new);
 }
 
