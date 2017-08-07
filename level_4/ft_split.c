@@ -6,7 +6,7 @@
 /*   By: kmodipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 08:29:01 by kmodipa           #+#    #+#             */
-/*   Updated: 2017/07/23 15:15:34 by kmodipa          ###   ########.fr       */
+/*   Updated: 2017/08/07 18:07:22 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int		main(int c, char **v)
 		return (0);
 	else
 	{
-		printf("%i words\n", word_count(v[1]));
+		//printf("%i words\n", word_count(v[1]));
 		array = ft_split(v[1]);
 		while (array[param] != 0)
 		{
