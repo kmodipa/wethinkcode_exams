@@ -5,28 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmodipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/21 08:29:01 by kmodipa           #+#    #+#             */
-/*   Updated: 2017/08/07 18:07:22 by kmodipa          ###   ########.fr       */
+/*   Created: 2017/08/08 10:55:58 by kmodipa           #+#    #+#             */
+/*   Updated: 2017/08/08 12:22:08 by kmodipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-int		word_count(char *str)
+char	*ft_strsub(char *str, int start, int end)
 {
-	int index;
-	int count;
+	int		index;
+	char	*sub;
 
 	index = 0;
+	if (!(sub = (char *)malloc(sizeof(char *) * 255)))
+		return (NULL);
+	while (index <= end && str[start] != 10)
+		sub[index++] = str[start++];
+	sub[index] = '\0';
+	return (sub);
+}
+
+int		word_count(char *str)
+{
+	int		index;
+	int		count;
+
 	count = 0;
-	while (str[index] != '\0')
+	index = 0;
+	while (str[index])
 	{
-		if (str[index] != 32 && str[index] != 9)
+		if (str[index] != 32 && str[index] != 9 && str[index] != 10)
 		{
-			if ((str[index - 1] == 32 || str[index -1] == 9) || 
-					(index == 0 && str[index] != 32 && str[index] != 9))
+			if (index == 0 && str[index] != 32 && str[index] != 9 && 
+					str[index] != 10)
+				count++;
+			else if (str[index - 1] == 32 || str[index - 1] == 9)
 				count++;
 		}
 		index++;
@@ -34,80 +49,30 @@ int		word_count(char *str)
 	return (count);
 }
 
-int		ft_strlen(char *str)
-{
-	int len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
-}
-
-char	*ft_strsub(char *s, int start, int len)
-{
-	char	*new_str;
-	int	index;
-
-	index = 0;
-	if (s)
-	{
-		new_str = (char *)malloc(sizeof(char *) * (len + 1));
-		if (new_str)
-		{
-			if (start < ft_strlen(s) && len <= ft_strlen(s))
-			{
-				while (index < len)
-				{
-					new_str[index] = s[start + index];
-					index++;
-				}
-				new_str[index] = '\0';
-				return (new_str);
-			}
-		}
-	}
-	return (NULL);
-}
-
-
-void	ft_putstr(char *str)
-{
-	int	index;
-
-	index = 0;
-	while (str[index] != '\0')
-	{
-		write(1, &str[index], 1);
-		index++;
-	}
-}
-
 char	**ft_split(char *str)
 {
 	int		index;
+	char	**array;
 	int		array_index;
 	int		jump;
-	char	**array;
 
 	index = 0;
 	array_index = 0;
-	if (!str || !(array = (char **)malloc(sizeof(char *) * word_count(str) + 1)))
+	if (!(array = (char **)malloc(sizeof(char **) * (word_count(str) + 1))))
 		return (NULL);
-	while (str[index] == 32 || str[index] == 9)
-		index++;
-	while (str[index] != '\0')
+	while (str[index])
 	{
-		if (str[index] != 32 && str[index] != 9)
+		if (str[index] != 32 && str[index] != 9 && str[index] != 10)
 		{
-			if ((str[index - 1] == 32 || str[index - 1] == 9 ) || (index == 0 &&
-							str[index] != 32 && str[index] != 9))
+			jump = 0;
+			if ((str[index - 1] == 32 || str[index - 1] == 9) || 
+					str[index - 1] == '\n' || 
+					(index == 0 && str[index] != 32 && str[index] != 9))
 			{
-				jump = 0;
-				while (str[index + jump] != 32 && str[index + jump] != 9 && 
-						str[index + jump] != '\0')
+				while (str[index + jump] != 32 && str[index + jump] != 9 &&
+						str[index + jump] != 10 && str[index + jump])
 					jump++;
-				array[array_index++] = ft_strsub(str, index, jump);
+				array[array_index++] = ft_strsub(str, index, jump - 1);
 			}
 		}
 		index++;
@@ -128,12 +93,11 @@ int		main(int c, char **v)
 		return (0);
 	else
 	{
-		//printf("%i words\n", word_count(v[1]));
+		printf("%i words\n", word_count(v[1]));
 		array = ft_split(v[1]);
 		while (array[param] != 0)
 		{
-			ft_putstr(array[param]);
-			ft_putstr("\n");
+			printf("%s\n", array[param]);
 			param++;
 		}
 	}
